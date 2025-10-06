@@ -1,0 +1,263 @@
+{% extends 'baseadmin.html' %}
+{% block title %}Listar producto{% endblock %}
+{% block body %}
+
+<script>
+    function confirmarEliminacion(url) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    }
+
+
+    function confirmarCancelacion() {
+        Swal.fire({
+            title: '¿Cancelar edición?',
+            text: "Se perderán los cambios no guardados.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6c757d',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, cancelar',
+            cancelButtonText: 'Volver'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditar'));
+                modal.hide();
+            }
+        });
+    }
+
+    function confirmarEdicion(formId) {
+        Swal.fire({
+            title: '¿Guardar cambios?',
+            text: "Se actualizará la información del producto.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#198754',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, guardar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(formId).submit();
+            }
+        });
+    }
+</script>
+<div class="container-fluid mt-4">
+    <div class="row g-4 justify-content-center">
+        <div class="col-12">
+            <h2 class=" text-center alert alert-danger py-4">Lista de Productos</h2>
+            <div class="card shadow">
+                <div class="card-body">
+                    <table id="tablaProductos" class="table table-bordered table-striped">
+                        <thead class="table-info">
+                            <tr>
+                                <th>Código</th>
+                                <th>Categoría</th>
+                                <th>Cantidad</th>
+                                <th>Precio Compra</th>
+                                <th>Precio Venta</th>
+                                <th>Proveedor</th>
+                                <th>Fecha Compra</th>
+                                <th>Fecha Vencimiento</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in productos %}
+                            <tr>
+                                <td>{{ p.codigo }}</td>
+                                <td>{{ p.categoria }}</td>
+                                <td>{{ p.cantidad }}</td>
+                                <td>{{ p.precio_compra }}</td>
+                                <td>{{ p.precio_venta }}</td>
+                                <td>{{ p.proveedor }}</td>
+                                <td>{{ p.fecha_compra }}</td>
+                                <td>{{ p.fecha_vencimiento }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-success btn-editar"
+                                        data-id="{{ p.id }}" data-codigo="{{ p.codigo }}"
+                                        data-nombre="{{ p.nombre }}" data-categoria="{{ p.categoria }}"
+                                        data-cantidad="{{ p.cantidad }}" data-precio_compra="{{ p.precio_compra }}"
+                                        data-precio_venta="{{ p.precio_venta }}" data-proveedor="{{ p.proveedor }}"
+                                        data-fecha_compra="{{ p.fecha_compra }}"
+                                        data-fecha_vencimiento="{{ p.fecha_vencimiento }}">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-danger btn-eliminar"
+                                        data-url="{{ url_for('eliminar_producto', id=p.id) }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form method="POST" id="formEditar">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalEditarLabel">Editar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body row g-3">
+                    <input type="hidden" name="id" id="edit-id">
+                    <div class="col-md-4"><input type="text" name="codigo" id="edit-codigo" class="form-control"
+                            placeholder="Código" required></div>
+                    <div class="col-md-4"><input type="text" name="nombre" id="edit-nombre" class="form-control"
+                            placeholder="Nombre" required></div>
+                    <div class="col-md-4"><input type="text" name="categoria" id="edit-categoria" class="form-control"
+                            placeholder="Categoría" required></div>
+                    <div class="col-md-3"><input type="number" name="cantidad" id="edit-cantidad" class="form-control"
+                            placeholder="Cantidad" required></div>
+                    <div class="col-md-3"><input type="number" step="0.01" name="precio_compra" id="edit-precio_compra"
+                            class="form-control" placeholder="Precio Compra" required></div>
+                    <div class="col-md-3"><input type="number" step="0.01" name="precio_venta" id="edit-precio_venta"
+                            class="form-control" placeholder="Precio Venta" required></div>
+                    <div class="col-md-3"><input type="text" name="proveedor" id="edit-proveedor" class="form-control"
+                            placeholder="Proveedor"></div>
+                    <div class="col-md-3"><input type="date" name="fecha_compra" id="edit-fecha_compra"
+                            class="form-control"></div>
+                    <div class="col-md-3"><input type="date" name="fecha_vencimiento" id="edit-fecha_vencimiento"
+                            class="form-control"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="confirmarEdicion('formEditar')">
+                        Guardar cambios
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="confirmarCancelacion()">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+<script>
+    // Poblar el modal de edición con los datos del botón que lo abrió
+    window.addEventListener('load', function () {
+        var modalEditar = document.getElementById('modalEditar');
+        if (modalEditar) {
+            modalEditar.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget; // Button that triggered the modal
+                if (!button) return;
+
+                // Leer atributos data- del botón
+                var id = button.getAttribute('data-id') || '';
+                var codigo = button.getAttribute('data-codigo') || '';
+                var nombre = button.getAttribute('data-nombre') || '';
+                var categoria = button.getAttribute('data-categoria') || '';
+                var cantidad = button.getAttribute('data-cantidad') || '';
+                var precio_compra = button.getAttribute('data-precio_compra') || '';
+                var precio_venta = button.getAttribute('data-precio_venta') || '';
+                var proveedor = button.getAttribute('data-proveedor') || '';
+                var fecha_compra = button.getAttribute('data-fecha_compra') || '';
+                var fecha_vencimiento = button.getAttribute('data-fecha_vencimiento') || '';
+
+                // Asignar valores a los inputs del modal
+                var setIfExists = function (idSelector, value) {
+                    var el = document.getElementById(idSelector);
+                    if (el) el.value = value;
+                };
+
+                setIfExists('edit-id', id);
+                setIfExists('edit-codigo', codigo);
+                setIfExists('edit-nombre', nombre);
+                setIfExists('edit-categoria', categoria);
+                setIfExists('edit-cantidad', cantidad);
+                setIfExists('edit-precio_compra', precio_compra);
+                setIfExists('edit-precio_venta', precio_venta);
+                setIfExists('edit-proveedor', proveedor);
+                setIfExists('edit-fecha_compra', fecha_compra);
+                setIfExists('edit-fecha_vencimiento', fecha_vencimiento);
+
+                // Si el botón incluye un data-url (por ejemplo para la ruta de edición), asignarla al form
+                var form = document.getElementById('formEditar');
+                if (form) {
+                    var actionUrl = button.getAttribute('data-url');
+                    if (actionUrl) {
+                        form.action = actionUrl;
+                    }
+                }
+            });
+        }
+
+        // Enlazar botones de eliminar para usar la función confirmarEliminacion
+        document.querySelectorAll('.btn-eliminar').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                var url = btn.getAttribute('data-url');
+                if (url) {
+                    confirmarEliminacion(url);
+                }
+            });
+        });
+
+        // Enlazar botones de editar: poblar modal y abrirlo programáticamente
+        document.querySelectorAll('.btn-editar').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                try {
+                    console.log('btn-editar clicked', btn);
+
+                    var id = btn.getAttribute('data-id') || '';
+                    var codigo = btn.getAttribute('data-codigo') || '';
+                    var nombre = btn.getAttribute('data-nombre') || '';
+                    var categoria = btn.getAttribute('data-categoria') || '';
+                    var cantidad = btn.getAttribute('data-cantidad') || '';
+                    var precio_compra = btn.getAttribute('data-precio_compra') || '';
+                    var precio_venta = btn.getAttribute('data-precio_venta') || '';
+                    var proveedor = btn.getAttribute('data-proveedor') || '';
+                    var fecha_compra = btn.getAttribute('data-fecha_compra') || '';
+                    var fecha_vencimiento = btn.getAttribute('data-fecha_vencimiento') || '';
+
+                    var setIfExists = function (idSelector, value) {
+                        var el = document.getElementById(idSelector);
+                        if (el) el.value = value;
+                    };
+
+                    setIfExists('edit-id', id);
+                    setIfExists('edit-codigo', codigo);
+                    setIfExists('edit-nombre', nombre);
+                    setIfExists('edit-categoria', categoria);
+                    setIfExists('edit-cantidad', cantidad);
+                    setIfExists('edit-precio_compra', precio_compra);
+                    setIfExists('edit-precio_venta', precio_venta);
+                    setIfExists('edit-proveedor', proveedor);
+                    setIfExists('edit-fecha_compra', fecha_compra);
+                    setIfExists('edit-fecha_vencimiento', fecha_vencimiento);
+
+                    // Abrir modal con la API de Bootstrap
+                    var modalEl = document.getElementById('modalEditar');
+                    if (modalEl) {
+                        var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                        modal.show();
+                    } else {
+                        console.warn('modalEditar no encontrado');
+                    }
+                } catch (err) {
+                    console.error('Error al abrir modal editar:', err);
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
