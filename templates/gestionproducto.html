@@ -17,46 +17,68 @@
                         <!-- Identificación -->
                         <div class="mb-3">
                             <label for="codigo">Código/ID</label>
-                            <input type="text" class="form-control" name="codigo" required>
+                            <input type="text" class="form-control" name="codigo" data-bs-toggle="tooltip"
+                                data-bs-placement="right" data-bs-custom-class="boton-panel"
+                                title="Ingresa el código o ID del producto" required>
                         </div>
                         <div class="mb-3">
                             <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" required>
+                            <input type="text" class="form-control" name="nombre" data-bs-toggle="tooltip"
+                                data-bs-placement="right" data-bs-custom-class="boton-panel" title="Nombre del producto"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label for="categoria">Categoría</label>
-                            <input type="text" class="form-control" name="categoria" required>
+                            <input type="text" class="form-control" name="categoria" data-bs-toggle="tooltip"
+                                data-bs-placement="right" data-bs-custom-class="boton-panel"
+                                title="Categoría a la que pertenece el producto" required>
                         </div>
 
                         <!-- Stock y control -->
                         <div class="mb-3">
                             <label for="cantidad">Cantidad</label>
-                            <input type="number" class="form-control" name="cantidad" required>
+                            <input type="number" class="form-control" name="cantidad" data-bs-toggle="tooltip"
+                                data-bs-placement="right" data-bs-custom-class="boton-panel"
+                                title="Cantidad disponible en inventario" required>
                         </div>
 
                         <!-- Datos financieros -->
                         <div class="mb-3">
                             <label for="precio_compra">Precio Compra</label>
-                            <input type="number" step="0.01" class="form-control" name="precio_compra" required>
+                            <input type="number" step="0.01" class="form-control" name="precio_compra"
+                                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="boton-panel"
+                                title="Precio de compra del producto" required>
                         </div>
                         <div class="mb-3">
                             <label for="precio_venta">Precio Venta</label>
-                            <input type="number" step="0.01" class="form-control" name="precio_venta" required>
+                            <input type="number" step="0.01" class="form-control" name="precio_venta"
+                                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="boton-panel"
+                                title="Precio de venta al público" required>
                         </div>
                         <div class="mb-3">
                             <label for="proveedor">Proveedor</label>
-                            <input type="text" class="form-control" name="proveedor">
+                            <input type="text" class="form-control" name="proveedor" data-bs-toggle="tooltip"
+                                data-bs-placement="right" data-bs-custom-class="boton-panel"
+                                title="Nombre del proveedor del producto">
                         </div>
                         <div class="mb-3">
                             <label for="fecha_compra">Fecha de Compra</label>
-                            <input type="date" class="form-control" name="fecha_compra">
+                            <input type="date" class="form-control" name="fecha_compra" data-bs-toggle="tooltip"
+                                data-bs-placement="right" data-bs-custom-class="boton-panel"
+                                title="Fecha en la que se adquirió el producto">
                         </div>
                         <div class="mb-3">
                             <label for="fecha_vencimiento">Fecha de Vencimiento</label>
-                            <input type="date" class="form-control" name="fecha_vencimiento">
+                            <input type="date" class="form-control" name="fecha_vencimiento" data-bs-toggle="tooltip"
+                                data-bs-placement="right" data-bs-custom-class="boton-panel"
+                                title="Fecha de caducidad del producto">
                         </div>
 
-                        <button type="submit" class="btn btn-success w-100">Agregar Producto</button>
+                        <button type="submit" class="btn btn-success w-100" data-bs-toggle="tooltip"
+                            data-bs-placement="bottom" data-bs-custom-class="boton-panel"
+                            title="Agregar este producto al inventario">
+                            Agregar Producto
+                        </button>
                     </form>
                 </div>
             </div>

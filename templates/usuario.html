@@ -103,8 +103,9 @@
     <div class="alert alert-info text-center py-4">
         <!-- Botón que abre el modal flotante -->
         <div class="text-end">
-            <button type="button" class="btn btn-info w-25" data-bs-toggle="modal" data-bs-target="#registroModal">
-                Agregar Usuario
+            <button type="button" class="btn btn-info w-25" data-bs-toggle="modal" data-bs-target="#registroModal"
+                data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="boton-panel"
+                title="Añadir usuarios"> Agregar Usuario
             </button>
         </div>
     </div>
@@ -133,7 +134,9 @@
                     </div>
                     <!-- Footer registro -->
                     <div class="modal-footer justify-content-between">
-                        <button type="submit" class="btn btn-info" id="btnGuardarUsuario">Guardar</button>
+                        <button type="submit" class="btn btn-info" id="btnGuardarUsuario" data-bs-toggle="tooltip"
+                            data-bs-placement="bottom" data-bs-custom-class="boton-panel"
+                            title="Guardar nuevos usuarios">Guardar</button>
                     </div>
                     <script>
                         // Registro de usuario por AJAX
@@ -217,11 +220,13 @@
                     <td>
                         <!-- Botón que abre el modal de edición -->
                         <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#editarModal{{ u.id }}">
+                            data-bs-target="#editarModal{{ u.id }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-custom-class="boton-panel" title="Iditar usuarios">
                             Editar
                         </button>
                         <a href="{{ url_for('eliminar_usuario', id=u.id) }}" class="btn btn-danger btn-sm"
-                            onclick="confirmarEliminar(event, this)">Eliminar</a>
+                            onclick="confirmarEliminar(event, this)" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-custom-class="boton-panel" title="Eliminar usuarios">Eliminar</a>
                     </td>
                 </tr>
 
@@ -269,7 +274,9 @@
                                 </div>
 
                                 <div class="modal-footer justify-content-between">
-                                    <button type="submit" class="btn btn-info">Guardar cambios</button>
+                                    <button type="submit" class="btn btn-info" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-custom-class="boton-panel"
+                                        title="Actualizar usuarios">Guardar</button>
                                 </div>
                             </form>
                         </div>
